@@ -1,0 +1,26 @@
+<WorkflowProcess Id="" Name="as" AccessLevel="PUBLIC">
+   <Activities>
+      	 <Activity Id="starter" Name="STARTER">
+	         <Implementation>STARTER</Implementation>
+         </Activity>
+      	 <Activity Id="78e54a1f-53ec-4c7d-87b9-295018a32e15" Name="Value">
+	         <Implementation>10</Implementation>
+         </Activity>
+      	 <Activity Id="b5c1ad70-5230-4d1c-8fcf-e698a2b39df5" Name="Value">
+	         <Implementation>2</Implementation>
+         </Activity>
+      	 <Activity Id="3ef08ee2-415f-474b-95ac-1ec3eea7096c" Name="Division">
+	         <Implementation>division</Implementation>
+         </Activity>
+      	 <Activity Id="e49e9909-cead-4c48-9944-ac82f0031262" Name="Result">
+	         <Implementation>result</Implementation>
+         </Activity>
+   </Activities>
+   <Transitions>
+      <Transition Id="0" From="starter" To="78e54a1f-53ec-4c7d-87b9-295018a32e15"/>
+      <Transition Id="1" From="starter" To="b5c1ad70-5230-4d1c-8fcf-e698a2b39df5"/>
+      <Transition Id="2" From="78e54a1f-53ec-4c7d-87b9-295018a32e15" To="3ef08ee2-415f-474b-95ac-1ec3eea7096c"/>
+      <Transition Id="3" From="b5c1ad70-5230-4d1c-8fcf-e698a2b39df5" To="3ef08ee2-415f-474b-95ac-1ec3eea7096c"/>
+      <Transition Id="4" From="3ef08ee2-415f-474b-95ac-1ec3eea7096c" To="e49e9909-cead-4c48-9944-ac82f0031262"/>
+   </Transitions>
+</WorkflowProcess>

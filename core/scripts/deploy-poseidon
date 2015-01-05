@@ -1,0 +1,23 @@
+#!/bin/bash
+
+POSEIDON_PATH=/home/christian/workspace/Poseidon
+POSEIDON_BIN_PATH=bin
+POSEIDON_CMP=poseidon.tar.gz
+
+SERVER_IP=146.134.234.150
+SERVER_USER=ccdadmin
+
+echo compressing poseidon
+cd $POSEIDON_PATH
+tar -czvf $POSEIDON_CMP $POSEIDON_BIN_PATH
+
+echo uploading to server
+scp $POSEIDON_CMP $SERVER_USER@$SERVER_IP:
+
+echo extrating poseidon on server
+ssh $SERVER_USER@$SERVER_IP 'tar -xzvf poseidon.tar.gz'
+
+echo removing poseidon.tar.gz
+rm $POSEIDON_CMP
+
+echo finished

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+PAGE_PATH=/var/www/html
+PAGE_BIN_PATH=bin
+PAGE_CMP=page.tar.gz
+
+SERVER_IP=146.134.234.150
+SERVER_USER=ccdadmin
+
+echo compressing page
+cd $PAGE_PATH
+tar -czvf $PAGE_CMP $PAGE_BIN_PATH
+
+echo uploading to server
+scp $PAGE_CMP $SERVER_USER@$SERVER_IP:
+
+echo extrating page on server
+ssh $SERVER_USER@$SERVER_IP 'tar -xzvf page.tar.gz'
+
+echo removing page.tar.gz
+rm $PAGE_CMP
+
+echo finished
