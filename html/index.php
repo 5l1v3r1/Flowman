@@ -1,154 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-
-    <?php require( 'templates/header.php');?>
-    <?php require( 'config/conf.php');?>
-
-</head>
-
+<?php require('/var/www/html/templates/header.php');?>
 <body>
-
-    <section id="container">
-
-        <?php require( 'templates/topbar.php');?>
-        <?php require( 'templates/sidebar.php');?>
-
-        <!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-        <!--main content start-->
-        <section id="main-content">
-            <section class="wrapper site-min-height">
-                <div class="row mt">
-                    <div class="col-lg-6">
-                        <div class="row mtbox">
-                            <a href="hd.php">
-                                <div class="col-md-2 col-sm-2 col-md-offset-1 box0">
-                                    <div class="box1">
-                                        <span><i class="fa fa-hdd-o"></i></span>
-                                        <h3><?php echo $HD_QUANTITY ?> </h3>
-                                    </div>
-                                    <p>You have
-                                        <?php echo $HD_QUANTITY ?> HD(s) Installed</p>
-                                </div>
-                            </a>
-
-                            <a href="download.php">
-                                <div class="col-md-2 col-sm-2 box0">
-                                    <div class="box1">
-                                        <span><i class="fa fa-download"></i></span>
-                                        <h3>4</h3>
-                                    </div>
-                                    <p>4 download(s) finished</p>
-                                </div>
-                            </a>
-
-                        </div>
-                        <!-- /row mt -->
-                        <div class="row mtbox">
-
-                            <div class="col-md-6 col-sm-6 mb">
-                                <a href="hd.php">
-                                    <div class="darkblue-panel pn donut-chart">
-                                        <div class="darkblue-header">
-                                            <h5>DISK SPACE</h5>
-                                        </div>
-                                        <canvas id="hd-chart" height="150" width="150"></canvas>
-                                        <footer>
-                                            <div class="pull-left">
-                                                <h5><i class="fa fa-hdd-o"></i> <?php echo sprintf('%.2f',$HD_TOTAL_SPACE); ?> GB</h5>
-                                            </div>
-                                            <div class="pull-right">
-                                                <h5><?php echo sprintf('%.2f', ($HD_TOTAL_USED_SPACE / $HD_TOTAL_SPACE) * 100  ); ?> % Used</h5>
-                                            </div>
-                                        </footer>
-                                    </div>
-                                    <!-- /darkblue panel -->
-                                </a>
-                            </div>
-                            <!-- /col-md-4 -->
-
-                            <div class="col-md-6 col-sm-6 hidden-lg mb">
-                                <a href="<?php echo $SHELL_IN_A_BOX_URL; ?>" target="_blank">
-                                    <div class="darkblue-panel pn">
-                                        <div class="darkblue-header">
-                                            <h5>SHELL</h5>
-                                        </div>
-                                        <h1 class="mt"><i class="fa fa-terminal fa-3x"></i></h1>
-                                        <footer>
-                                            <div class="centered">
-                                                <h5>Server terminal</h5>
-                                            </div>
-                                        </footer>
-                                    </div>
-                                    <! -- /darkblue panel -->
-                                </a>
-                            </div>
-                            <!-- /col-md-4 -->
-
-                        </div>
-                        <!-- /row mt -->
-                    </div>
-                    <!-- /col-lg-6 -->
-
-
-                    <div class="col-lg-6 visible-lg">
-                        <div class="content-panel">
-                            <h4><i class="fa fa-angle-right"></i> _ SHELL</h4>
-                            <div class="panel-body text-center">
-                                <iframe style="border:none" id="shellinaboxframe" src="<?php echo $SHELL_IN_A_BOX_URL; ?>" class="col-md-12"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /col-lg-6 -->
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <!-- Navigation -->
+	<?php require('/var/www/html/templates/dashboard_nav.php');?>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                         Drawing Board <small>Workflow Diagram</small>
+                     </h1>
                 </div>
+                <div class="row">
+                    <div id="DrawingBoard" class="col-md-12">
+                        <div id="paper" class="col-md-12"></div>
+                    </div>
                 </div>
-            </section>
-            <! --/wrapper -->
-        </section>
-        <!-- /MAIN CONTENT -->
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+            <div>
+                <form hidden method="POST" action="post.php" id="postForm">
+                    <textarea name="xmlTextArea" id="xmlTextArea"></textarea>
+                </form>
+            </div>
+            <!-- /#post -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
 
-        <!--main content end-->
+    <!-- Core JavaScript
+    ================================================== -->
 
-        <?php require( 'templates/footer.php');?>
+    <?php require('/var/www/html/templates/scripts.php');?>
+    <script src="js/lodash.js"></script>
+    <script src="js/backbone.js"></script>
 
-    </section>
+    <script src="js/joint/core.js"></script>
+    <script src="js/joint/vectorizer.js"></script>
+    <script src="js/joint/geometry.js"></script>
 
-    <?php require( 'templates/scripts.php');?>
+    <script src="js/joint/joint.dia.graph.js"></script>
 
-    <!--script for this page-->
+    <script src="js/joint/joint.dia.cell.js"></script>
+    <script src="js/joint/joint.dia.element.js"></script>
+    <script src="js/joint/joint.dia.link.js"></script>
+    <script src="js/joint/joint.dia.paper.js"></script>
 
-    <script>
-        document.getElementById("shellinaboxframe").setAttribute("height", $("#sidebar").innerHeight() - 250 + "px");
+    <script src="js/joint/plugins/joint.shapes.basic.js"></script>
 
-        var free = <?php echo $HD_TOTAL_FREE_SPACE ?> ;
-        var used = <?php echo $HD_TOTAL_USED_SPACE ?> ;
-        free = parseFloat(free.toFixed(2));
-        used = parseFloat(used.toFixed(2))
+    <script src="js/joint/plugins/connectors/joint.connectors.normal.js"></script>
 
-         var hdData = [
-            {
-                value: used,
-                color: "#e56060",
-                highlight: "#FF6B6B",
-                label: "Used"
-            },
-            {
-                value: free,
-                color: "#fbfbfb",
-                highlight: "#ffffff",
-                label: "Free"
-            }
-        ];
-        var hdChart = new Chart(document.getElementById("hd-chart").getContext("2d")).Doughnut(hdData, {
-            animationEasing: "easeOutQuart",
-            tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>GB"
+    <script src="js/filesaver/FileSaver.js"></script>
 
-        });
-    </script>
+    <script src="js/amphitrite.js"></script>
+    <script src="js/customNodes.js"></script>
+
+    <!-- ================================================ -->
 
 </body>
-
 </html>
